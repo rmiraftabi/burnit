@@ -1,0 +1,19 @@
+{
+  "name": "burnit",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "grunt nodeunit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rmiraftabi/burnit.git"
+  },
+  "author": "Ramin Miraftabi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rmiraftabi/burnit/issues"
+  },
+  "homepage": "https://github.com/rmiraftabi/burnit"
+}
