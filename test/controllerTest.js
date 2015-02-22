@@ -1,4 +1,5 @@
-var data = require('../lib/data.js');
+var data = require('../lib/data.js'),
+  controller = require('../lib/controller.js');
 
 /*
   ======== A Handy Little Nodeunit Reference ========
@@ -20,7 +21,33 @@ var data = require('../lib/data.js');
     test.ifError(value)
 */
 
-exports.testCalculation = function(test) {
+exports.testData = function(test) {
   test.equal(data.METs.crossfit, 8.0);
+  test.equal(data.METs['soccer'], 7.0);
+  test.equal(data.defaultActivities.length, 3);
+  test.done();
+}
+
+/*
+exports.testCalculation = function(test) {
+  test.equal(controller.calculateTime(300, 60, 'crossfit'), 0.625);
+  test.equal(controller.calculateTime("300kcal", "60kg", 'crossfit'), 0.625);
+  test.equal(new String(controller.calculateTime(
+      "300cal", "132lbs", 'crossfit')).substring(0, 5), "0.625");
+  test.done();
+}
+
+exports.testTimeConversion = function(test) {
+  var time = controller.calculateTime(300, 60, 'crossfit');
+  test.equal(controller.convertTimeToString(time), "37:30");
+  time = controller.calculateTime(300, 60, 'lyingTV');
+  test.equal(controller.convertTimeToString(time), "5:00:00");
+  test.done();
+}
+*/
+
+exports.testGetDefaultCalories = function(test) {
+  var response = controller.getDefaultCalories('200');
+  test.equal(response['60'].activities.walking.time, '46:31');
   test.done();
 }
