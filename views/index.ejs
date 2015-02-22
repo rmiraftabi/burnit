@@ -1,0 +1,67 @@
+<% include header %>
+
+<div class="row">
+  <div class="one-half column offset-by-three">
+        <h1><%= title %></h1>
+  </div>
+</div>
+<form>
+  <div class="row">
+    <div class="two columns offset-by-three">
+      <label for="calories">Calories:</label>
+    </div>
+    <div class="four columns">
+        <input type="number" class="u-full-width" placeholder="300" id="calories" name="calories" />
+        <input type="hidden" value="<%= nonce %>" id="n" name="n" />
+    </div>
+  </div>
+</form>
+
+<div class="row" id="activities" style="display:none">
+</div>
+
+<div class="four columns" style="display:none" id="activityTemplate">
+  <h2 class="weight"></h2>
+</div>
+
+<div id="singleActivity" style="display: none;">
+  <h3 class="activityLabel"></h3>
+  <p></p>
+</div>
+
+<script>
+  $('#calories').change(function() {
+    ga('send', 'event', 'Calories', 'Get', $(this).val());
+    $.ajax('/api/getCalories/' + $(this).val(), {
+        data: {n: $("#n").val()},
+        error: function(xhr, status, error) {},
+        success: function(result, status, xhr) {
+          if (result.length < 3) return;
+          if ($("#activities").children().length > 0) {
+            $("#activities").slideUp();
+            $("#activities").children().remove();
+          }
+          $("#activities").slideDown();
+
+          $.each(result, function(key, weight) {
+            var activity = $("#activityTemplate").clone();
+            $(activity).attr('id', 'weight' + key);
+            $(activity).children('h2').text(weight.label);
+            $.each(weight.activities, function(key, act) {
+              var a = $("#singleActivity").clone();
+              $(a).attr('id', act.label + weight);
+              $(a).show();
+              $(a).addClass(act.label);
+              $(a).children('h3').text(act.label);
+              $(a).children('p').text(act.time);
+              $(activity).append(a);
+            });
+            $("#activities").append(activity);
+            $(activity).slideDown();
+          });
+        }
+    });
+  });
+</script>
+
+<% include footer %>
