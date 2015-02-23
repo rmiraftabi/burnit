@@ -30,6 +30,7 @@
     "express": "^4.11.2",
     "express-session": "^1.10.3",
     "jade": "^1.9.2",
+    "loc": "^0.6.0",
     "morgan": "^1.5.1",
     "nonce": "^1.0.3",
     "serve-favicon": "^2.2.0"

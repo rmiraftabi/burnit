@@ -41,12 +41,28 @@ if (app.get('env') === 'production') {
 
 app.use(session(sess));
 
+var loc = require('loc')({
+  getLocaleFrom: ['path', 'query', 'cookie'],
+  storeLocaleTo: ['cookie'],
+  storage: 'file',
+  locales: ['en', 'fi'],
+  directory: './locales',
+  extension: '.json',
+  excludeList: ['.css', '.js', '.png', '.jpg', '.gif', '/javascripts/', '/stylesheets', '/images/']
+});
+
+app.use(loc.loc());
+
+app.use(loc.pathRewrite());
+
+//loc.writeLocaleCache();
+
 app.use('/', routes);
 app.use('/api', api);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  var err = new Error('Not Found');
+  var err = new Error(req.i18n.__('Not Found'));
   err.status = 404;
   next(err);
 });
@@ -59,7 +75,7 @@ if (app.get('env') === 'development') {
   app.use(function(err, req, res, next) {
     res.status(err.status || 500);
     res.render('error', {
-      title: "BurnIt - Something went wrong",
+      title: req.i18n.__("BurnIt - Something went wrong"),
       message: err.message,
       error: err
     });
@@ -71,7 +87,7 @@ if (app.get('env') === 'development') {
 app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error', {
-    title: "BurnIt - Something went wrong",
+    title: req.i18n.__("BurnIt - Something went wrong"),
     message: err.message,
     error: {}
   });

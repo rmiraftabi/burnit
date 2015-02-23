@@ -22,8 +22,8 @@ var data = require('../lib/data.js'),
 */
 
 exports.testData = function(test) {
-  test.equal(data.METs.crossfit, 8.0);
-  test.equal(data.METs['soccer'], 7.0);
+  test.equal(data.activities.crossfit.met, 8.0);
+  test.equal(data.activities['soccer'].met, 7.0);
   test.equal(data.defaultActivities.length, 3);
   test.done();
 }
@@ -48,6 +48,6 @@ exports.testTimeConversion = function(test) {
 
 exports.testGetDefaultCalories = function(test) {
   var response = controller.getDefaultCalories('200');
-  test.equal(response['60'].activities.walking.time, '46:31');
+  test.equal(response['60'].activities[0].time, '46:31');
   test.done();
 }

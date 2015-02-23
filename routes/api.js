@@ -13,7 +13,6 @@ router.get('/getCalories/:calories', function(req, res, next) {
     res.status(400).json({ error: 'Unauthorized'});
   } else {
     var data = controller.getDefaultCalories(req.params.calories);
-    console.log(data);
     res.json(data);
   }
 });

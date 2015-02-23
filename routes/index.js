@@ -8,14 +8,14 @@ var router = express.Router();
 router.get('/', function(req, res, next) {
   req.session.nonce = nonce();
   res.render('index', {
-      title: 'BurnIt' ,
+      title: req.i18n.__('BurnIt') ,
       nonce: req.session.nonce
   });
 });
 
 router.get('/privacy-policy', function(req, res, next) {
   res.render('privacy-policy', {
-    title: 'Your Privacy Matters'
+    title: req.i18n.__('Your Privacy Matters')
   });
 });
 
